@@ -62,6 +62,7 @@ function App() {
           { role: 'system', content: 'You are a military medical AI providing guidance to a wounded soldier.' },
           { role: 'user', content: prompt },
         ],
+        temperature: 0.2,
         }),
       });
 
@@ -87,21 +88,21 @@ function App() {
       let prompt = `
       Estamos en asistencia medica de guerra,
       Tu eres un médico experto en el campo de batalla,
-      Hay un ${data.rango} herido,
+      Hay un soldado herido,
       Nació el año ${data.fecha_nacimiento},
       Con grupo sanguineo ${data.grupo_sanguineo},
       consciente: ${datos.consciente},
       respira: ${datos.respira},
       Con alergias ${data.alergias},
-      Con condiciones medicas ${data.condiciones_medica},
-      Actualmente con la siguiente situación: ${data.situacion},
+      Con condiciones medicas ${data.condiciones_medicas},
+      Actualmente con la siguiente situación: ${datos.situacion},
       que deberia hacer? Actua como un verdadero medico.
       No hay servicio medico disponible.
       Sé que eres un modelo de inteligencia artifial y seria preferible consultar con un medico, 
       pero en tu respuesta solamente dime que deberia hacer, sé claro y conciso. 
       Insisto, solo dame los puntos con lo que debo hacer sin introducción ni conclusión, Contestame en segunda persona, 
       dirigiendote a mi. Pon en negrita las palabras más importantes. Dame instrucciones precisas. 
-      Devuelve tu respuesta en formato MD.
+      Devuelve tu respuesta en formato MD como una lista de las instruscciones numeradas por orden, indica los saltos de linea con '\n'.
       Gracias
       `;
 
@@ -127,7 +128,7 @@ function App() {
         <Formulario onEnviar={manejarDatosFormulario} />
       ) : (
         <div>
-          <h2>WarMedAI:</h2>
+          <h1>WarMedAI:</h1>
           <ReactMarkdown>{respuesta}</ReactMarkdown>
         </div>
       )}
