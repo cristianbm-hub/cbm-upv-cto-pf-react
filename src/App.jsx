@@ -10,7 +10,7 @@ const apiUrl = 'https://api.openai.com/v1/chat/completions';
 function App() {
   const [mostrarFormulario, setMostrarFormulario] = useState(true);
 
-  const [respuesta, setRespuesta] = useState('Esperando respuesta...');
+  const [respuesta, setRespuesta] = useState('');
 
   //imprimir en consola la respuesta cuando se actualice
   React.useEffect(() => {
@@ -110,6 +110,8 @@ function App() {
 
       handleEnviarPregunta(prompt);
 
+      setRespuesta('Esperando respuesta...');
+
       setMostrarFormulario(false);
     });
   };
@@ -130,6 +132,10 @@ function App() {
         <div>
           <h1>WarMedAI:</h1>
           <ReactMarkdown>{respuesta}</ReactMarkdown>
+          <br />
+          <a href="#" onClick={() => {setMostrarFormulario(true); setRespuesta()}} style={{ textDecoration: 'underline' }}>
+            ⇤ Otra consulta
+          </a>
         </div>
       )}
     </div>
