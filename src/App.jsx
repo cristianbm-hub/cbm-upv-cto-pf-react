@@ -130,8 +130,11 @@ function App() {
         <Formulario onEnviar={manejarDatosFormulario} />
       ) : (
         <div>
+          <br />
           <h1>WarMedAI:</h1>
-          <ReactMarkdown>{respuesta}</ReactMarkdown>
+          <div className="max-w-md mx-auto mt-4 p-4 bg-white rounded shadow">
+            <ReactMarkdown>{respuesta}</ReactMarkdown>
+          </div>
           <br />
           <a href="#" onClick={() => {setMostrarFormulario(true); setRespuesta()}} style={{ textDecoration: 'underline' }}>
             ⇤ Otra consulta
