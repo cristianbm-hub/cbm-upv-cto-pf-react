@@ -18,7 +18,7 @@ const Formulario = ({ onEnviar }) => {
         <label className="block text-sm font-medium text-gray-600">
           Identificador del Accidentado:
         </label>
-        <input {...register("identificador")} className="mt-1 p-2 border rounded w-full"  />
+        <input {...register("identificador")} className="mt-1 p-2 border rounded w-full caret-emerald-900"  />
       </div>
 
       <div className="mb-4">
@@ -62,7 +62,7 @@ const Formulario = ({ onEnviar }) => {
         <input {...register("apikey")} className="mt-1 p-2 border rounded w-full" />
       </div>
 
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <button type="submit" className="bg-emerald-900 text-white px-4 py-2 rounded hover:bg-emerald-800">
         Enviar
       </button>
     </form>
