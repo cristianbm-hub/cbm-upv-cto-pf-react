@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Formulario from './components/Form.jsx';
+import ReactMarkdown from 'react-markdown';
 
 // Cambia 'TU_API_KEY' por la clave de API de ChatGPT
 let apiKey = '';
@@ -13,7 +14,7 @@ function App() {
 
   //imprimir en consola la respuesta cuando se actualice
   React.useEffect(() => {
-    console.log('Respuesta:', respuesta);
+    console.log('Respuesta:', respuesta);    
   }, [respuesta]);
 
   const fetchData = async (soldadoid) => {
@@ -82,16 +83,37 @@ function App() {
       
       console.log('Datos del formulario:', datos);
       console.log('Datos del soldado:', data);
-      
-      const data_prompt_soldado = 'nombre del soldado: '+data.nombre;
 
-      console.log('Datos del prompt:', data_prompt_soldado);
+      let prompt = `
+      Estamos en asistencia medica de guerra,
+      Tu eres un médico experto en el campo de batalla,
+      Hay un ${data.rango} herido,
+      Nació el año ${data.fecha_nacimiento},
+      Con grupo sanguineo ${data.grupo_sanguineo},
+      consciente: ${datos.consciente},
+      respira: ${datos.respira},
+      Con alergias ${data.alergias},
+      Con condiciones medicas ${data.condiciones_medica},
+      Actualmente con la siguiente situación: ${data.situacion},
+      que deberia hacer? Actua como un verdadero medico.
+      No hay servicio medico disponible.
+      Sé que eres un modelo de inteligencia artifial y seria preferible consultar con un medico, 
+      pero en tu respuesta solamente dime que deberia hacer, sé claro y conciso. 
+      Insisto, solo dame los puntos con lo que debo hacer sin introducción ni conclusión, Contestame en segunda persona, 
+      dirigiendote a mi. Pon en negrita las palabras más importantes. Dame instrucciones precisas. 
+      Devuelve tu respuesta en formato MD.
+      Gracias
+      `;
 
-      handleEnviarPregunta('solamente dime como se llama el siguiente soldado: '+data_prompt_soldado);
+      console.log('Datos del prompt:', prompt);
+
+      handleEnviarPregunta(prompt);
 
       setMostrarFormulario(false);
     });
   };
+
+
 
   return (
     <div>
@@ -106,7 +128,7 @@ function App() {
       ) : (
         <div>
           <h2>WarMedAI:</h2>
-          <p>{respuesta}</p>
+          <ReactMarkdown>{respuesta}</ReactMarkdown>
         </div>
       )}
     </div>
