@@ -30,7 +30,7 @@ function App() {
       return jsonData;
     } catch (error) {
       console.error(error);
-      return { error: 'No se pudo conectar al servidor' };
+      return { error: 'No se pudo obtener datos del servidor' };
     }
   };
 
