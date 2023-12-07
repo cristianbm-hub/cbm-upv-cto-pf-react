@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import './App.css';
 import Formulario from './components/Form.jsx';
 
+// Cambia 'TU_API_KEY' por la clave de API de ChatGPT
+let apiKey = '';
+const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
 function App() {
   const [mostrarFormulario, setMostrarFormulario] = useState(true);
-  const [resultado, setResultado] = useState(null);
+
+  const [respuesta, setRespuesta] = useState('Esperando respuesta...');
+
+  //imprimir en consola la respuesta cuando se actualice
+  React.useEffect(() => {
+    console.log('Respuesta:', respuesta);
+  }, [respuesta]);
 
   const fetchData = async (soldadoid) => {
     let apiUrl = 'http://127.0.0.1:8000/soldado/' + soldadoid;
@@ -34,13 +44,51 @@ function App() {
     }
   };
 
+ 
+  const handleEnviarPregunta = async (prompt) => {
+    try {
+      console.log('Pregunta:', prompt);
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+           messages: [
+          { role: 'system', content: 'You are a military medical AI providing guidance to a wounded soldier.' },
+          { role: 'user', content: prompt },
+        ],
+        }),
+      });
+
+      const data = await response.json();
+      setRespuesta(data.choices[0]?.message?.content || 'No hay respuesta');
+
+    } catch (error) {
+      console.error('Error al enviar la pregunta:', error);
+      setRespuesta('Error al enviar la pregunta');
+    }
+  };
+
   const manejarDatosFormulario = (datos) => {
     const data_soldado = fetchData(datos.identificador);
+    //API key chatgpt
+    apiKey = datos.apikey;
 
     data_soldado.then((data) => {
+      
       console.log('Datos del formulario:', datos);
       console.log('Datos del soldado:', data);
-      setResultado({ datosFormulario: datos, datosSoldado: data });
+      
+      const data_prompt_soldado = 'nombre del soldado: '+data.nombre;
+
+      console.log('Datos del prompt:', data_prompt_soldado);
+
+      handleEnviarPregunta('solamente dime como se llama el siguiente soldado: '+data_prompt_soldado);
+
       setMostrarFormulario(false);
     });
   };
@@ -57,9 +105,8 @@ function App() {
         <Formulario onEnviar={manejarDatosFormulario} />
       ) : (
         <div>
-          <h2>Resultados:</h2>
-          <p>Datos del formulario: {JSON.stringify(resultado.datosFormulario)}</p>
-          <p>Datos del soldado: {JSON.stringify(resultado.datosSoldado)}</p>
+          <h2>WarMedAI:</h2>
+          <p>{respuesta}</p>
         </div>
       )}
     </div>
