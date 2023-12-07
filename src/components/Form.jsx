@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 const Formulario = ({ onEnviar }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      identificador: "1234A"
+      //identificador: "1234A"
     }
   });
 
@@ -27,7 +27,7 @@ const Formulario = ({ onEnviar }) => {
         </label>
           <label className="mr-4">
             Sí
-            <input type="radio" {...register("respira")} value="Sí" className="ml-2" />
+            <input type="radio" {...register("respira")} required value="Sí" className="ml-2" />
           </label>
           <label>
             No
@@ -40,7 +40,7 @@ const Formulario = ({ onEnviar }) => {
         </label>
           <label className="mr-4">
             Sí
-            <input type="radio" {...register("consciente")} value="Sí" className="ml-2" />
+            <input type="radio" {...register("consciente")} required value="Sí" className="ml-2" />
           </label>
           <label>
             No
@@ -52,7 +52,7 @@ const Formulario = ({ onEnviar }) => {
         <label className="block text-sm font-medium text-gray-600">
           Situación:
         </label>
-        <textarea {...register("situacion")} className="mt-1 p-2 border rounded w-full" />
+        <textarea {...register("situacion")} required className="mt-1 p-2 border rounded w-full" />
       </div>
 
       <div className="mb-4">
