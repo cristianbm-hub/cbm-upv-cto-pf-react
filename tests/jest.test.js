@@ -2,5 +2,5 @@
 import { test } from 'vitest'
 
 test('jest', () => {
-  console.log('Form test')
+  console.log('jest test')
 })
