@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Formulario from './components/Form.jsx';
 import ReactMarkdown from 'react-markdown';
@@ -8,6 +8,11 @@ let apiKey = '';
 const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
 function App() {
+
+  const toggleTheme = () => {
+    document.documentElement.classList.toggle('dark');
+  };
+
   const [mostrarFormulario, setMostrarFormulario] = useState(true);
 
   const [respuesta, setRespuesta] = useState('');
@@ -119,24 +124,25 @@ function App() {
 
 
   return (
-    <div>
-      <h1>WarMedAI</h1>
+    <div className='min-h-screen flex flex-col items-center p-10 dark:bg-neutral-900'>
+     <button className='text-xs  dark:text-white' onClick={toggleTheme}> change color theme</button>
+      <h1 className='text-2xl dark:text-white'>WarMedAI</h1>
 
-      <div className="flex justify-center">
-        <img src="/soldier.png" className="w-1/4" alt="Soldado" />
+      <div className="flex flex-col items-center">
+        <img src="/soldier.png" className="w-1/3" alt="Soldado" />
       </div>
 
       {mostrarFormulario ? (
         <Formulario onEnviar={manejarDatosFormulario} />
       ) : (
-        <div>
+        <div className='dark:text-white'>
           <br />
-          <h1>WarMedAI:</h1>
-          <div className="max-w-md mx-auto mt-4 p-4 bg-white rounded shadow">
+          <h1 className=''>WarMedAI:</h1>
+          <div className="max-w-md mx-auto mt-4 p-4 bg-white rounded shadow dark:bg-neutral-800">
             <ReactMarkdown>{respuesta}</ReactMarkdown>
           </div>
           <br />
-          <a href="#" onClick={() => {setMostrarFormulario(true); setRespuesta()}} style={{ textDecoration: 'underline' }}>
+          <a className='dark:text-white' href="#" onClick={() => {setMostrarFormulario(true); setRespuesta()}} style={{ textDecoration: 'underline' }}>
             ⇤ Otra consulta
           </a>
         </div>
